@@ -17,14 +17,13 @@
   },
   "dependencies": {
     "@mui/material": "^5.13.6",
-    "@mui/styled-engine-sc": "^5.12.0",
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
+    "@mui/styled-engine-sc": "^5.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
     "redux": "^4.2.1",
-    "redux-form": "^8.3.10",
-    "redux-saga": "^1.2.3",
+    "redux-thunk": "^2.4.2",
     "styled-components": "^6.0.0-rc.6"
   },
   "devDependencies": {

@@ -1,0 +1,12 @@
+action > reducer
+
+//conectando o componente ao REDUX..
+export default connect(mapStateToProps)(Form)
+
+
+//state -> todo o conteudo da STORE
+const mapStateToProps = (state: any) => { 
+    return {
+        todos: state.todoList
+    }
+}
