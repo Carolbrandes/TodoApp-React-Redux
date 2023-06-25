@@ -2,10 +2,10 @@ import React from 'react'
 import Checkbox from '@mui/material/Checkbox'
 import * as S from './style'
 import { connect } from 'react-redux'
-import { editTodo } from '@redux/actions'
+import { addnewEditTodo } from '@redux/thunk'
 
 const mapDispatchToProps = (dispatch: any) => ({
-    editTodo: (payload: any) => dispatch(editTodo(payload))
+    addnewEditTodo: (payload: any) => dispatch(addnewEditTodo(payload))
 })
 
 class Todo extends React.Component {
@@ -24,23 +24,37 @@ class Todo extends React.Component {
         })
     }
 
+    handleEdit = (todo: any) => {
+        console.log('handleEdit')
+        console.log('todo receive =>', todo)
+        this.props.addnewEditTodo(todo)
+        this.props.handleModal()
+    }
+
     render() {
-        
+
+        const {todo} = this.props
+        const {id, name, description, status, date} = todo
+    
         return (
             <div>
-                <p>{this.props.id}</p>
+                <p>{id}</p>
                 <S.CheckboxWrapper
                     value={this.state.isConcluded}
                     control={<Checkbox />}
-                    label={this.props.name}
+                    label={name}
                     labelPlacement="end"
                     onChange={this.handleCheckbox}
-                    isConcluded={this.state.isConcluded}
+                    isConcluded={status}
                 />
 
-                <S.Description isConcluded={this.state.isConcluded}>{this.props.description}</S.Description>
+                <S.Description isConcluded={status}>{description}</S.Description>
 
-                <p>{this.props.date}</p>
+                <p>{date}</p>
+
+                <p>{status}</p>
+
+                <button onClick={() => this.handleEdit(todo)}>editar</button>
 
 
             </div>

@@ -112,8 +112,12 @@ class TodoList extends React.Component {
 
                 {
                     todos?.length ? (
-                        this.mytodos(todos).map(({ id, name, description, status, date }: any) => (
-                            <Todo key={id} id={id} name={name} description={description} status={status} date={date} />
+                        this.mytodos(todos).map((todo: any) => (
+                            <Todo 
+                                key={todo.id} 
+                                todo={todo}
+                                handleModal={this.props.handleModal} 
+                            />
                         ))
                     ) : (<p>Nenhuma tarefa cadastrada</p>)
                 }
