@@ -20,7 +20,7 @@ const todoList = (state = initialState, action: Iaction) => {
         
             return {
                 ...state,
-                todoList: [...state.todoList, action.newTodoList]
+                todoList: [...state.todoList, action.todo]
             }
 
         case EDIT_TODO:

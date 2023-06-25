@@ -1,14 +1,14 @@
 import React, { ChangeEvent  } from 'react'
 import { nanoid } from '@reduxjs/toolkit'
 import { connect } from 'react-redux'
-import { addTodo } from '@redux/actions'
+import { addNewTodo } from '@redux/thunk'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 
 
 const mapDispatchToProps = (dispatch: any) => ({
-    addTodo: (payload: any) => dispatch(addTodo(payload))
+    addTodo: (payload: any) => dispatch(addNewTodo(payload))
 })
 
 
