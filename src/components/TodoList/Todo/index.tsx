@@ -2,10 +2,10 @@ import React from 'react'
 import Checkbox from '@mui/material/Checkbox'
 import * as S from './style'
 import { connect } from 'react-redux'
-import { addnewEditTodo } from '@redux/thunk'
+import { updateTodo } from '@redux/thunk'
 
 const mapDispatchToProps = (dispatch: any) => ({
-    addnewEditTodo: (payload: any) => dispatch(addnewEditTodo(payload))
+    updateTodo: (payload: any) => dispatch(updateTodo(payload))
 })
 
 class Todo extends React.Component {
@@ -13,15 +13,13 @@ class Todo extends React.Component {
         isConcluded: this.props.status == 'p' ? false : true
     }
 
-    // componentDidUpdate(){
-    //     console.log('Todo atualizado')
-    //     this.props.editTodo({...this.state, isConcluded: this.state.isConcluded})
-    // }
 
     handleCheckbox = () => {
         this.setState({
             isConcluded: !this.state.isConcluded
         })
+
+        this.props.updateTodo({...this.props.todo, status: this.props.todo.status == 'p' ? 'c' : 'p'})
     }
 
     handleEdit = (todo: any) => {
