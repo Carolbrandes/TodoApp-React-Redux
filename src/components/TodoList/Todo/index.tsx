@@ -1,12 +1,22 @@
 import React from 'react'
 import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel';
+import * as S from './style'
+import { connect } from 'react-redux'
+import { editTodo } from '@redux/actions'
 
+const mapDispatchToProps = (dispatch: any) => ({
+    editTodo: (payload: any) => dispatch(editTodo(payload))
+})
 
 class Todo extends React.Component {
     state = {
-        isConcluded: false
+        isConcluded: this.props.isConcluded
     }
+
+    // componentDidUpdate(){
+    //     console.log('Todo atualizado')
+    //     this.props.editTodo({...this.state, isConcluded: this.state.isConcluded})
+    // }
 
     handleCheckbox = () => {
         this.setState({
@@ -18,19 +28,20 @@ class Todo extends React.Component {
         
         return (
             <div>
-                <FormControlLabel
+                <S.CheckboxWrapper
                     value={this.state.isConcluded}
                     control={<Checkbox />}
                     label={this.props.name}
                     labelPlacement="end"
                     onChange={this.handleCheckbox}
+                    isConcluded={this.state.isConcluded}
                 />
 
-                <span>{this.props.description}</span>
+                <S.Description isConcluded={this.state.isConcluded}>{this.props.description}</S.Description>
 
             </div>
         )
     }
 }
 
-export default Todo
+export default connect(null, mapDispatchToProps)(Todo)

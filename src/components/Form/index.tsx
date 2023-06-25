@@ -1,4 +1,5 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent  } from 'react'
+import { nanoid } from '@reduxjs/toolkit'
 import { connect } from 'react-redux'
 import { addTodo } from '@redux/actions'
 import Box from '@mui/material/Box'
@@ -10,17 +11,13 @@ const mapDispatchToProps = (dispatch: any) => ({
     addTodo: (payload: any) => dispatch(addTodo(payload))
 })
 
-const mapStateToProps = (state: any) => {
-    console.log('mapStateToProps state =>', state)
-    return {
-        todoList: state.todoList.todoList
-    }
-}
+
 
 class Form extends React.Component {
     state = {
         name: '',
-        description: ''
+        description: '',
+        isConcluded: false
     }
 
 
@@ -34,7 +31,7 @@ class Form extends React.Component {
     }
 
     handleClick = () => {
-        this.props.addTodo(this.state)
+        this.props.addTodo({...this.state, id: nanoid()})
     }
 
     render() {
@@ -75,5 +72,5 @@ class Form extends React.Component {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form)
+export default connect(null, mapDispatchToProps)(Form)
 

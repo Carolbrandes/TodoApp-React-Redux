@@ -3,31 +3,26 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Todo from './Todo'
 
-
-//state -> todo o conteudo da STORE
 const mapStateToProps = (state: any) => {
     return {
-        list: state.todoList
+        todos: state.todoList
     }
 }
 
-
 class TodoList extends React.Component {
 
-
+   
     render() {
-        console.log('this props =>', this.props)
-        const { list } = this.props
-
+        const { todos } = this.props
         return (
             <div>
 
                 {
-                    list?.length ? (
-                        list.map(({name, description}: ITodo) => <Todo key={name} name={name} description={description} />)
+                    todos?.length ? (
+                        todos.map(({ id, name, description, isConcluded }: ITodo) => <Todo key={id} id={id} name={name} description={description} isConcluded={isConcluded} />)
                     ) : (<p>Nenhuma tarefa cadastrada</p>)
                 }
-                
+
             </div>
 
         )
