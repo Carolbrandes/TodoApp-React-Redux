@@ -12,13 +12,11 @@ const initialState = {
 }
 
 const todoList = (state = initialState, action: Iaction ) => {
- console.log('reducer action =>', action)
  console.log('reducer state =>', state)
 
  switch (action.type) {
     case ADD_TODO:
-        const newList = state.todoList
-        newList.push(action.newTodoList)
+        const newList = [...state.todoList, action.newTodoList]
         console.log('reducer newList =>', newList)
         return {
             ...state,

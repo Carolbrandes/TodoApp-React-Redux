@@ -1,31 +1,35 @@
 import { ITodo } from '@types/index'
 import React from 'react'
 import { connect } from 'react-redux'
+import Todo from './Todo'
 
 
 //state -> todo o conteudo da STORE
 const mapStateToProps = (state: any) => {
-    console.log('mapStateToProps state =>', state)
     return {
-        todos: state.todoList
+        list: state.todoList
     }
 }
 
 
 class TodoList extends React.Component {
-    
+
+
     render() {
-        console.log('this.props =>', this.props)
-        const {todos} = this.props
-        console.log('todos =>', todos)
+        console.log('this props =>', this.props)
+        const { list } = this.props
+
         return (
             <div>
+
                 {
-                    todos?.length ? (
-                        todos.map((todo: ITodo) => (<p key={todo.name}>{todo.name}</p>))
+                    list?.length ? (
+                        list.map(({name, description}: ITodo) => <Todo key={name} name={name} description={description} />)
                     ) : (<p>Nenhuma tarefa cadastrada</p>)
                 }
+                
             </div>
+
         )
     }
 }
