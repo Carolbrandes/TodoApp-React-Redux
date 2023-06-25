@@ -14,7 +14,7 @@ const initialState = {
 }
 
 const todoList = (state = initialState, action: Iaction) => {
-    console.log('reducer state =>', state)
+
 
     switch (action.type) {
         case ADD_TODO:
@@ -25,6 +25,7 @@ const todoList = (state = initialState, action: Iaction) => {
             }
 
         case EDIT_TODO:
+            console.log('edit todo =>', action)
             const removeTodo = state.todoList.filter((todo: ITodo) => todo.id != action.todo.id)
             const listEdit = [...removeTodo, action.todo]
 
@@ -35,7 +36,7 @@ const todoList = (state = initialState, action: Iaction) => {
 
 
         case ADD_EDIT_TODO:
-            console.log('add edit todo =>', action.todo)
+
             return {
                 ...state,
                 todoForEdition: action.todo
