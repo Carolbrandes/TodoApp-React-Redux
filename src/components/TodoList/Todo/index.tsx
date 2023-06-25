@@ -10,7 +10,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 class Todo extends React.Component {
     state = {
-        isConcluded: this.props.isConcluded
+        isConcluded: this.props.status == 'p' ? false : true
     }
 
     // componentDidUpdate(){
@@ -28,6 +28,7 @@ class Todo extends React.Component {
         
         return (
             <div>
+                <p>{this.props.id}</p>
                 <S.CheckboxWrapper
                     value={this.state.isConcluded}
                     control={<Checkbox />}
@@ -38,6 +39,9 @@ class Todo extends React.Component {
                 />
 
                 <S.Description isConcluded={this.state.isConcluded}>{this.props.description}</S.Description>
+
+                <p>{this.props.date}</p>
+
 
             </div>
         )

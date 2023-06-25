@@ -17,7 +17,7 @@ class Form extends React.Component {
     state = {
         name: '',
         description: '',
-        isConcluded: false
+        status: 'p'
     }
 
 
@@ -31,7 +31,7 @@ class Form extends React.Component {
     }
 
     handleClick = () => {
-        this.props.addTodo({...this.state, id: nanoid()})
+        this.props.addTodo({...this.state, id: nanoid(), date: `${new Date}`})
     }
 
     render() {
