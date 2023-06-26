@@ -21,17 +21,16 @@ const todoList = (state = initialState, action: Iaction) => {
 
             return {
                 ...state,
-                todoList: [...state.todoList, action.todo]
+                todoList: action.todoList
             }
 
         case EDIT_TODO:
             console.log('edit todo =>', action)
-            const removeTodo = state.todoList.filter((todo: ITodo) => todo.id != action.todo.id)
-            const listEdit = [...removeTodo, action.todo]
+           
 
             return {
                 ...state,
-                todoList: listEdit
+                todoList: action.listEdit
             }
 
 

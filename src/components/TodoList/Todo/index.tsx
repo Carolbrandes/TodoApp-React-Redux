@@ -12,6 +12,13 @@ import 'moment/dist/locale/pt-br'
 
 moment.locale('pt-br')
 
+
+const mapStateToProps = (state: any) => {
+    return {
+        todos: state.todoList,
+    }
+}
+
 const mapDispatchToProps = (dispatch: any) => ({
     updateTodo: (payload: any) => dispatch(updateTodo(payload)),
     addnewEditTodo: (payload: any) => dispatch(addnewEditTodo(payload))
@@ -28,7 +35,10 @@ class Todo extends React.Component {
             isConcluded: event.target.checked
         })
 
-        this.props.updateTodo({ ...this.props.todo, status: this.props.todo.status == 'p' ? 'c' : 'p' })
+        this.props.updateTodo({
+            todos: this.props.todos,
+            data: {...this.props.todo, status: this.props.todo.status == 'p' ? 'c' : 'p'}
+        })
     }
 
     handleEdit = (todo: any) => {
@@ -88,4 +98,4 @@ class Todo extends React.Component {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Todo)
+export default connect(mapStateToProps, mapDispatchToProps)(Todo)

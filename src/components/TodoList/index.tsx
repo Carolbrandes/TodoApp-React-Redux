@@ -71,10 +71,11 @@ class TodoList extends React.Component {
     }
 
     render() {
-        const { todos } = this.props
-        console.log("🚀 ~ file: index.tsx:77 ~ TodoList ~ render ~ todos:", todos)
-        const myTodos = this.todosTratement(todos)
-        console.log("🚀 ~ file: index.tsx:80 ~ TodoList ~ render ~ myTodos:", myTodos)
+        const todos = localStorage.getItem('todos')
+        console.log("🚀 ~ TodoList ~ render ~ todoslocalstorage:", todos)
+       
+        const myTodos = todos && this.todosTratement(JSON.parse(todos))
+        // console.log("🚀 ~ file: index.tsx:80 ~ TodoList ~ render ~ myTodos:", myTodos)
 
         return (
             <>

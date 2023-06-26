@@ -6,10 +6,15 @@ import InputsForm from '@components/InputsForm'
 import Box from '@mui/material/Box'
 
 
+const mapStateToProps = (state: any) => {
+    return {
+        todos: state.todoList,
+    }
+}
+
 const mapDispatchToProps = (dispatch: any) => ({
     addTodo: (payload: any) => dispatch(addNewTodo(payload))
 })
-
 
 class Form extends React.Component {
     state = {
@@ -30,7 +35,10 @@ class Form extends React.Component {
     }
 
     handleClick = () => {
-        this.props.addTodo({ ...this.state.data, id: nanoid(), date: `${new Date}` })
+        this.props.addTodo({
+            data: { ...this.state.data, id: nanoid(), date: `${new Date}` }, 
+            todos: this.props.todos
+        })
         this.setState({
             data: {
                 name: '',
@@ -58,5 +66,5 @@ class Form extends React.Component {
 
 
 
-export default connect(null, mapDispatchToProps)(Form)
+export default connect(mapStateToProps, mapDispatchToProps)(Form)
 

@@ -10,7 +10,8 @@ import InputsForm from '@components/InputsForm'
 
 const mapStateToProps = (state: any) => {
     return {
-        todoEdit: state.todoForEdition
+        todoEdit: state.todoForEdition,
+        todos: state.todoList
     }
 }
 
@@ -24,7 +25,8 @@ class EditModal extends React.Component {
             name: this.props.todoEdit.name,
             description: this.props.todoEdit.description,
             id: this.props.todoEdit.id,
-            status: this.props.todoEdit.status
+            status: this.props.todoEdit.status,
+            date: this.props.todoEdit.date
         }
     }
 
@@ -38,7 +40,10 @@ class EditModal extends React.Component {
     }
 
     handleClick = () => {
-        this.props.updateTodo(this.state.data)
+        this.props.updateTodo({
+            todos: this.props.todos,
+            data: this.state.data
+        })
 
         setTimeout(() => {
             this.props.handleCloseModal()
