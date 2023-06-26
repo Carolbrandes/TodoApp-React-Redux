@@ -54,18 +54,23 @@ class Form extends React.Component {
     }
 
     handleClick = () => {
-        if (this.state.data.name && this.state.data.description) {
-            this.props.addTodo({ ...this.state.data, id: nanoid(), date: `${new Date}` })
+        if (!this.state.data.name && !this.state.data.description) {
+            console.log('deu errado')
             this.setState({
-                errors: [],
-                data: {}
+                errors: [{ message: 'Preencha o nome da Atividade e a Descrição', type: 'all' }]
             })
 
             return
         }
 
+        console.log('td certo!')
+        this.props.addTodo({ ...this.state.data, id: nanoid(), date: `${new Date}` })
         this.setState({
-            errors: [{message: 'Preencha o nome da Atividade e a Descrição', type:'all'}]
+            errors: [],
+            data: {
+                name: '',
+                description: ''
+            }
         })
 
     }
