@@ -1,10 +1,8 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
-import Button from '@mui/material/Button'
 import { connect } from 'react-redux'
 import { updateTodo } from '@redux/thunk'
-import * as S from '@styles/Global'
 import InputsForm from '@components/InputsForm'
 
 

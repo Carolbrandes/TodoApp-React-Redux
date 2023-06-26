@@ -3,7 +3,7 @@ import {ADD_TODO, EDIT_TODO, ADD_EDIT_TODO} from '../types'
 
 
 export const addTodo = (todoList: ITodo[]) => {
-    console.log("🚀 ~ file: action ~ addTodo ~ todoList:", todoList)
+   
     return {
         type: ADD_TODO,
         todoList

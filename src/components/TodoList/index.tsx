@@ -1,4 +1,3 @@
-import { ITodo } from '@types/index'
 import React from 'react'
 import { connect } from 'react-redux'
 import Todo from './Todo'
@@ -6,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Unstable_Grid2'
 import moment from 'moment'
 import * as S from './styles'
 
@@ -42,9 +41,9 @@ class TodoList extends React.Component {
     todosWithOrder = (todos: any) => (
         todos.sort((t1: any, t2: any) => {
             const todo1 = moment(t1.date)
-            console.log("🚀 ~ file: index.tsx:43 ~ TodoList ~ todos.sort ~ todo1:", todo1)
+           
             const todo2 = moment(t2.date)
-            console.log("🚀 ~ file: index.tsx:45 ~ TodoList ~ todos.sort ~ todo2:", todo2)
+            
 
             if (this.state.order == 'firstnew') {
                 if (todo2 < todo1) return -1
@@ -72,10 +71,9 @@ class TodoList extends React.Component {
 
     render() {
         const todos = localStorage.getItem('todos')
-        console.log("🚀 ~ TodoList ~ render ~ todoslocalstorage:", todos)
-       
+    
         const myTodos = todos && this.todosTratement(JSON.parse(todos))
-        // console.log("🚀 ~ file: index.tsx:80 ~ TodoList ~ render ~ myTodos:", myTodos)
+       
 
         return (
             <>

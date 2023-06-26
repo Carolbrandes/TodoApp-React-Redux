@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent } from "react"
 import Button from '@mui/material/Button'
 import * as S from '@styles/Global'
 

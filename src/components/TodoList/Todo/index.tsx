@@ -3,7 +3,7 @@ import Checkbox from '@mui/material/Checkbox'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import CardContent from '@mui/material/CardContent'
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Unstable_Grid2'
 import * as S from './style'
 import { connect } from 'react-redux'
 import { addnewEditTodo, updateTodo } from '@redux/thunk'
@@ -42,8 +42,6 @@ class Todo extends React.Component {
     }
 
     handleEdit = (todo: any) => {
-        console.log('handleEdit')
-        console.log('todo receive =>', todo)
         this.props.addnewEditTodo(todo)
         this.props.handleModal()
     }
@@ -51,7 +49,6 @@ class Todo extends React.Component {
     render() {
 
         const { todo, index } = this.props
-        console.log(`🚀 ~ Todo ${index}:`, todo)
         const { name, description, status, date } = todo
 
 

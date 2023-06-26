@@ -25,7 +25,7 @@ const todoList = (state = initialState, action: Iaction) => {
             }
 
         case EDIT_TODO:
-            console.log('edit todo =>', action)
+           
            
 
             return {
