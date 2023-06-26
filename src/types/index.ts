@@ -51,7 +51,7 @@ export interface IpropsTodo {
     addnewEditTodo: Function
     handleModal: Function
     todo: ITodo
-    contentEditable: any
+    todosLocalStorage:ITodo[]
 }
 
 export interface IpropsTodoList {

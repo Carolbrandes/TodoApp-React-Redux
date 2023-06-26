@@ -73,7 +73,8 @@ class TodoList extends React.Component<IpropsTodoList> {
     render() {
         const todos = localStorage.getItem('todos')
     
-        const myTodos = todos && this.todosTratement(JSON.parse(todos))
+        const myTodos = todos && this.todosTratement(JSON.parse(todos)) || []
+        console.log("🚀 ~ file: index.tsx:77 ~ TodoList ~ render ~ myTodos:", myTodos)
        
 
         return (
@@ -128,6 +129,7 @@ class TodoList extends React.Component<IpropsTodoList> {
                                         key={todo.id}
                                         todo={todo}
                                         handleModal={this?.props?.handleModal}
+                                        todosLocalStorage={myTodos}
                                     />
                                 )
 

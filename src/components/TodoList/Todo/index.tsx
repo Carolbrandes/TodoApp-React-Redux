@@ -15,12 +15,6 @@ import { Dispatch } from 'redux'
 moment.locale('pt-br')
 
 
-const mapStateToProps = (state: IState) => {
-    return {
-        todos: state.todoList,
-    }
-}
-
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     updateTodo: (payload: any) => dispatch(updateTodo(payload)),
     addnewEditTodo: (payload: any) => dispatch(addnewEditTodo(payload))
@@ -38,7 +32,7 @@ class Todo extends React.Component<IpropsTodo> {
         })
 
         this.props.updateTodo({
-            todos: this.props.todos,
+            todos: this.props.todosLocalStorage,
             data: {...this.props.todo, status: this.props.todo.status == 'p' ? 'c' : 'p'}
         })
     }
@@ -97,4 +91,4 @@ class Todo extends React.Component<IpropsTodo> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Todo)
+export default connect(null, mapDispatchToProps)(Todo)
