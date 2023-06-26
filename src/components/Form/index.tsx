@@ -5,6 +5,7 @@ import { addNewTodo } from '@redux/thunk'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 
+
 import * as S from '@styles/Global'
 
 
@@ -15,27 +16,62 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 class Form extends React.Component {
     state = {
-        name: '',
-        description: '',
-        status: 'p'
+        data: {
+            name: '',
+            description: '',
+            status: 'p'
+        },
+        errors: []
+    }
+
+    handleOnBlur = (event: ChangeEvent<HTMLInputElement>, input: string) => {
+
+        if (event.target.value.length == 0) {
+            input == 'name' ?
+                this.setState({
+                    errors: [...this.state.errors.filter(err => err.type != 'all'), { message: 'Preencha o nome da atividade', type: 'name' }]
+                }) : input == 'description' ? this.setState({
+                    errors: [...this.state.errors.filter(err => err.type != 'all'), { message: 'Preencha a descrição', type: 'description' }]
+                }) : false
+        }
     }
 
 
     handleChange = (event: ChangeEvent<HTMLInputElement>, input: string) => {
+
         input == 'name' ?
             this.setState({
-                name: event.target.value
+                data: {
+                    name: event.target.value
+                },
+                errors: this.state.errors.filter((error: any) => error.type != 'name' && error.type != 'all')
             }) : input == 'description' ? this.setState({
-                description: event.target.value
+                data: {
+                    description: event.target.value
+                },
+                errors: this.state.errors.filter((error: any) => error.type != 'description')
             }) : false
     }
 
     handleClick = () => {
-        this.props.addTodo({ ...this.state, id: nanoid(), date: `${new Date}` })
+        if (this.state.data.name && this.state.data.description) {
+            this.props.addTodo({ ...this.state.data, id: nanoid(), date: `${new Date}` })
+            this.setState({
+                errors: [],
+                data: {}
+            })
+
+            return
+        }
+
+        this.setState({
+            errors: [{message: 'Preencha o nome da Atividade e a Descrição', type:'all'}]
+        })
+
     }
 
     render() {
-        const name = this.state.name
+        const { name, description } = this.state.data
 
         return (
             <Box component="form">
@@ -43,8 +79,9 @@ class Form extends React.Component {
                 <S.InputWrapper
                     required
                     id="todo-name"
-                    label="Tarefa"
+                    placeholder="Tarefa"
                     value={name}
+                    onBlur={(event) => this.handleOnBlur(event, 'name')}
                     onChange={(event) => this.handleChange(event, 'name')}
                 />
 
@@ -52,15 +89,19 @@ class Form extends React.Component {
                 <S.InputWrapper
                     required
                     id="description"
-                    label="Descrição"
+                    placeholder="Descrição"
                     multiline
                     rows={4}
                     defaultValue=""
-                    value={this.state.description}
+                    value={description}
+                    onBlur={(event) => this.handleOnBlur(event, 'description')}
                     onChange={(event) => this.handleChange(event, 'description')}
                 />
 
 
+                {
+                    this.state?.errors?.map((error) => <S.ErrorMessage severity="error">{error.message}</S.ErrorMessage>)
+                }
 
                 <div>
                     <Button variant="contained" onClick={this.handleClick}>Adicionar</Button>
