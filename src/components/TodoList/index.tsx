@@ -20,7 +20,7 @@ const mapStateToProps = (state: IState) => {
 class TodoList extends React.Component<IpropsTodoList> {
     state = {
         status: 'all',
-        order: ''
+        order: 'firstnew'
     }
 
     handleStatus = (event: ChangeEvent<any>) => {
