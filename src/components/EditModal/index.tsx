@@ -1,10 +1,10 @@
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
+import React from 'react'
+import Box from '@mui/material/Box'
+import Modal from '@mui/material/Modal'
+import Button from '@mui/material/Button'
 import { connect } from 'react-redux'
-import Button from '@mui/material/Button';
-import React from 'react';
-import {updateTodo} from '@redux/thunk'
+import { updateTodo } from '@redux/thunk'
+import * as S from '@styles/Global'
 
 
 const mapStateToProps = (state: any) => {
@@ -69,25 +69,29 @@ class EditModal extends React.Component {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <TextField
+                    <S.InputWrapper
                         id="name"
                         label="Tarefa"
                         defaultValue={name}
                         value={this.state.name}
                         onChange={(event) => this.handleInput(event, 'name')}
+                        isEdit
                     />
 
-                    <TextField
+                    <S.InputWrapper
                         id="outlined-multiline-static"
-                        label="Multiline"
+                        label="Descrição"
                         multiline
                         rows={4}
                         defaultValue={description}
                         value={this.state.description}
                         onChange={(event) => this.handleInput(event, 'description')}
+                        isEdit
                     />
 
-                    <Button onClick={this.handleClick} variant="contained">Salvar Alterações</Button>
+                    <div>
+                        <Button onClick={this.handleClick} variant="contained">Salvar Alterações</Button>
+                    </div>
                 </Box>
             </Modal>
 

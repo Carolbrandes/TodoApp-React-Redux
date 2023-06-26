@@ -2,11 +2,15 @@ import { ITodo } from '@types/index'
 import React from 'react'
 import { connect } from 'react-redux'
 import Todo from './Todo'
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Grid from '@mui/material/Unstable_Grid2';
 import moment from 'moment'
+import * as S from './styles'
 
 
 const mapStateToProps = (state: any) => {
@@ -73,56 +77,78 @@ class TodoList extends React.Component {
 
 
         return (
-            <div>
-                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="status">Status</InputLabel>
-                    <Select
-                        labelId="status"
-                        id="status"
-                        value={this.state.status}
-                        onChange={this.handleStatus}
-                        label="Status"
-                    >
-                        <MenuItem value="">
-                            <em>Todos</em>
-                        </MenuItem>
-                        <MenuItem value="p">Pendentes</MenuItem>
-                        <MenuItem value="c">Concluídos</MenuItem>
+            <>
+                <S.WrapperFilter>
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                        <InputLabel id="status">Status</InputLabel>
+                        <Select
+                            labelId="status"
+                            id="status"
+                            value={this.state.status}
+                            onChange={this.handleStatus}
+                            label="Status"
+                        >
+                            <MenuItem value="">
+                                <em>Todos</em>
+                            </MenuItem>
+                            <MenuItem value="p">Pendentes</MenuItem>
+                            <MenuItem value="c">Concluídos</MenuItem>
 
-                    </Select>
-                </FormControl>
+                        </Select>
+                    </FormControl>
 
 
-                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="order">Ordernar</InputLabel>
-                    <Select
-                        labelId="order"
-                        id="order"
-                        value={this.state.order}
-                        onChange={this.handleOrder}
-                        label="Ordernar"
-                    >
-                       
-                        <MenuItem value="firstnew">Mais recentes</MenuItem>
-                        <MenuItem value="firtsold">Mais antigos</MenuItem>
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                        <InputLabel id="order">Ordernar</InputLabel>
+                        <Select
+                            labelId="order"
+                            id="order"
+                            value={this.state.order}
+                            onChange={this.handleOrder}
+                            label="Ordernar"
+                        >
 
-                    </Select>
-                </FormControl>
+                            <MenuItem value="firstnew">Mais recentes</MenuItem>
+                            <MenuItem value="firtsold">Mais antigos</MenuItem>
+
+                        </Select>
+                    </FormControl>
+                </S.WrapperFilter>
+
 
 
                 {
-                    todos?.length ? (
-                        this.mytodos(todos).map((todo: any) => (
-                            <Todo 
-                                key={todo.id} 
-                                todo={todo}
-                                handleModal={this.props.handleModal} 
-                            />
-                        ))
-                    ) : (<p>Nenhuma tarefa cadastrada</p>)
+                    todos?.length ?
+                        (
+                            <Grid container spacing={3}>
+                                {
+                                    this.mytodos(todos).map((todo: any) => (
+                                        <Grid xs={6} md={4}>
+                                            <Card sx={{ minWidth: 150 }}>
+                                                <CardContent>
+                                                    <Todo
+                                                        key={todo.id}
+                                                        todo={todo}
+                                                        handleModal={this.props.handleModal}
+                                                    />
+                                                </CardContent>
+                                            </Card>
+                                        </Grid>
+                                    ))
+                                }
+                            </Grid>
+                        ) :
+                        (
+                            <S.Text variant="subtitle1" gutterBottom>
+                                Nenhuma tarefa cadastrada
+                            </S.Text>
+                        )
                 }
 
-            </div>
+
+
+
+            </>
 
         )
     }

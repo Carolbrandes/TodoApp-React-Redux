@@ -1,11 +1,18 @@
 import React from 'react'
 import Checkbox from '@mui/material/Checkbox'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 import * as S from './style'
 import { connect } from 'react-redux'
-import { updateTodo } from '@redux/thunk'
+import { addnewEditTodo, updateTodo } from '@redux/thunk'
+import moment from 'moment'
+import 'moment/dist/locale/pt-br'
+
+moment.locale('pt-br')
 
 const mapDispatchToProps = (dispatch: any) => ({
-    updateTodo: (payload: any) => dispatch(updateTodo(payload))
+    updateTodo: (payload: any) => dispatch(updateTodo(payload)),
+    addnewEditTodo: (payload: any) => dispatch(addnewEditTodo(payload))
 })
 
 class Todo extends React.Component {
@@ -19,7 +26,7 @@ class Todo extends React.Component {
             isConcluded: !this.state.isConcluded
         })
 
-        this.props.updateTodo({...this.props.todo, status: this.props.todo.status == 'p' ? 'c' : 'p'})
+        this.props.updateTodo({ ...this.props.todo, status: this.props.todo.status == 'p' ? 'c' : 'p' })
     }
 
     handleEdit = (todo: any) => {
@@ -31,31 +38,47 @@ class Todo extends React.Component {
 
     render() {
 
-        const {todo} = this.props
-        const {id, name, description, status, date} = todo
-    
+        const { todo } = this.props
+        const { name, description, status, date } = todo
+
+
         return (
-            <div>
-                <p>{id}</p>
-                <S.CheckboxWrapper
-                    value={this.state.isConcluded}
-                    control={<Checkbox />}
-                    label={name}
-                    labelPlacement="end"
-                    onChange={this.handleCheckbox}
-                    isConcluded={status}
-                />
+            <>
+                <S.Heading>
+                    <Typography variant="h6" gutterBottom>Data: {moment(date).format('LLL')}</Typography>
 
-                <S.Description isConcluded={status}>{description}</S.Description>
+                    <Typography variant="h6" gutterBottom>
+                        Status:
+                        <S.Status isConcluded={status}>
+                            {status == 'p' ? 'Pendente' : 'Concluído'}
+                        </S.Status>
+                    </Typography>
+                </S.Heading>
 
-                <p>{date}</p>
+                <S.Block>
+                    <Typography variant="h6" gutterBottom>Tarefa:</Typography>
 
-                <p>{status}</p>
+                    <S.CheckboxWrapper
+                        value={this.state.isConcluded}
+                        control={<Checkbox />}
+                        label={name}
+                        labelPlacement="end"
+                        onChange={this.handleCheckbox}
+                        isConcluded={status}
+                    />
+                </S.Block>
 
-                <button onClick={() => this.handleEdit(todo)}>editar</button>
+                <S.Block>
+                    <Typography variant="h6" gutterBottom>Descrição:</Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                        {description}
+                    </Typography>
+                </S.Block>
+
+                <Button onClick={() => this.handleEdit(todo)} variant="outlined">Editar</Button>
 
 
-            </div>
+            </>
         )
     }
 }

@@ -10,6 +10,9 @@
       ],
       "@types/*": [
         "./types/*"
+      ],
+      "@styles/*": [
+        "./styles/*"
       ]
     },
     "target": "ES2020",

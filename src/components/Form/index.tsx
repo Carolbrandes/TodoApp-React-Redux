@@ -1,16 +1,16 @@
-import React, { ChangeEvent  } from 'react'
+import React, { ChangeEvent } from 'react'
 import { nanoid } from '@reduxjs/toolkit'
 import { connect } from 'react-redux'
 import { addNewTodo } from '@redux/thunk'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
+
+import * as S from '@styles/Global'
 
 
 const mapDispatchToProps = (dispatch: any) => ({
     addTodo: (payload: any) => dispatch(addNewTodo(payload))
 })
-
 
 
 class Form extends React.Component {
@@ -25,13 +25,13 @@ class Form extends React.Component {
         input == 'name' ?
             this.setState({
                 name: event.target.value
-            }) :  input == 'description' ?this.setState({
+            }) : input == 'description' ? this.setState({
                 description: event.target.value
-            }): false
+            }) : false
     }
 
     handleClick = () => {
-        this.props.addTodo({...this.state, id: nanoid(), date: `${new Date}`})
+        this.props.addTodo({ ...this.state, id: nanoid(), date: `${new Date}` })
     }
 
     render() {
@@ -39,32 +39,32 @@ class Form extends React.Component {
 
         return (
             <Box component="form">
-                <div>
-                    <TextField
-                        required
-                        id="todo-name"
-                        label="Tarefa"
-                        variant="standard"
-                        value={name}
-                        onChange={(event) => this.handleChange(event, 'name')}
-                    />
-                </div>
+
+                <S.InputWrapper
+                    required
+                    id="todo-name"
+                    label="Tarefa"
+                    value={name}
+                    onChange={(event) => this.handleChange(event, 'name')}
+                />
+
+
+                <S.InputWrapper
+                    required
+                    id="description"
+                    label="Descrição"
+                    multiline
+                    rows={4}
+                    defaultValue=""
+                    value={this.state.description}
+                    onChange={(event) => this.handleChange(event, 'description')}
+                />
+
+
 
                 <div>
-                    <TextField
-                        required
-                        id="description"
-                        label="Descrição"
-                        multiline
-                        rows={4}
-                        defaultValue=""
-                        value={this.state.description}
-                        onChange={(event) => this.handleChange(event, 'description')}
-                    />
+                    <Button variant="contained" onClick={this.handleClick}>Adicionar</Button>
                 </div>
-
-
-                <Button variant="contained" onClick={this.handleClick}>Adicionar</Button>
             </Box>
         )
     }
