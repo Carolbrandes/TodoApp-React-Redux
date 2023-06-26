@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import Checkbox from '@mui/material/Checkbox'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -9,30 +9,28 @@ import { connect } from 'react-redux'
 import { addnewEditTodo, updateTodo } from '@redux/thunk'
 import moment from 'moment'
 import 'moment/dist/locale/pt-br'
-import { IState, ITodo, IpropsTodo } from '@types/index'
-import { Dispatch } from 'redux'
 
 moment.locale('pt-br')
 
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: any) => {
     return {
         todos: state.todoList,
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: any) => ({
     updateTodo: (payload: any) => dispatch(updateTodo(payload)),
     addnewEditTodo: (payload: any) => dispatch(addnewEditTodo(payload))
 })
 
-class Todo extends React.Component<IpropsTodo> {
+class Todo extends React.Component {
     state = {
         isConcluded: this.props.status == 'p' ? false : true
     }
 
 
-    handleCheckbox = (event: ChangeEvent<any>) => {
+    handleCheckbox = (event) => {
         this.setState({
             isConcluded: event.target.checked
         })
@@ -43,14 +41,14 @@ class Todo extends React.Component<IpropsTodo> {
         })
     }
 
-    handleEdit = (todo: ITodo) => {
+    handleEdit = (todo: any) => {
         this.props.addnewEditTodo(todo)
         this.props.handleModal()
     }
 
     render() {
 
-        const { todo } = this.props
+        const { todo, index } = this.props
         const { name, description, status, date } = todo
 
 

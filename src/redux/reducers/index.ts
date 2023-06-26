@@ -5,7 +5,6 @@ interface Iaction {
     type: string
     todoList?: ITodo[]
     todo?: ITodo
-    listEdit?: ITodo[]
 }
 
 
@@ -27,6 +26,8 @@ const todoList = (state = initialState, action: Iaction) => {
 
         case EDIT_TODO:
            
+           
+
             return {
                 ...state,
                 todoList: action.listEdit

@@ -4,24 +4,19 @@ import { connect } from 'react-redux'
 import { addNewTodo } from '@redux/thunk'
 import InputsForm from '@components/InputsForm'
 import Box from '@mui/material/Box'
-import { IPayloadEdit,  IState,  IpropsForm } from '@types/index'
-import {  Dispatch } from 'redux'
 
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: any) => {
     return {
         todos: state.todoList,
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-    addTodo: (payload: IPayloadEdit) => {
-        dispatch(addNewTodo(payload));
-    }
-});
+const mapDispatchToProps = (dispatch: any) => ({
+    addTodo: (payload: any) => dispatch(addNewTodo(payload))
+})
 
-
-class Form extends React.Component<IpropsForm> {
+class Form extends React.Component {
     state = {
         data: {
             name: '',
@@ -30,7 +25,7 @@ class Form extends React.Component<IpropsForm> {
         }
     }
 
-    setStateData = (field: string, newValue: string) => {
+    setStateData = (field, newValue) => {
         this.setState({
             data: {
                 ...this.state.data,
@@ -40,9 +35,8 @@ class Form extends React.Component<IpropsForm> {
     }
 
     handleClick = () => {
-        const { addTodo }: IpropsForm = this.props
-        addTodo && addTodo({
-            data: { ...this.state.data, id: nanoid(), date: `${new Date}` },
+        this.props.addTodo({
+            data: { ...this.state.data, id: nanoid(), date: `${new Date}` }, 
             todos: this.props.todos
         })
         this.setState({

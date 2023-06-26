@@ -4,34 +4,31 @@ import Modal from '@mui/material/Modal'
 import { connect } from 'react-redux'
 import { updateTodo } from '@redux/thunk'
 import InputsForm from '@components/InputsForm'
-import { IPayloadEdit, IState, IpropsModalEdit } from '@types/index'
-import {  Dispatch } from 'redux'
 
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: any) => {
     return {
         todoEdit: state.todoForEdition,
         todos: state.todoList
     }
 }
 
-const mapDispatchToProps= (dispatch: Dispatch<any>) => ({
-    updateTodo: (payload: IPayloadEdit) => dispatch(updateTodo(payload))
+const mapDispatchToProps = (dispatch: any) => ({
+    updateTodo: (payload: any) => dispatch(updateTodo(payload))
 })
 
-class EditModal extends React.Component<IpropsModalEdit> {
+class EditModal extends React.Component {
     state = {
-        data:{
-            name: this?.props?.todoEdit?.name,
-            description: this?.props?.todoEdit?.description,
-            id: this?.props?.todoEdit?.id,
-            status: this?.props?.todoEdit?.status,
-            date: this?.props?.todoEdit?.date
-        } 
+        data: {
+            name: this.props.todoEdit.name,
+            description: this.props.todoEdit.description,
+            id: this.props.todoEdit.id,
+            status: this.props.todoEdit.status,
+            date: this.props.todoEdit.date
+        }
     }
-    
 
-    setStateData = (field: string, newValue: string) => {
+    setStateData = (field, newValue) => {
         this.setState({
             data: {
                 ...this.state.data,
@@ -41,15 +38,13 @@ class EditModal extends React.Component<IpropsModalEdit> {
     }
 
     handleClick = () => {
-        const {updateTodo, handleCloseModal}:IpropsModalEdit  = this.props
-
-        updateTodo({
+        this.props.updateTodo({
             todos: this.props.todos,
             data: this.state.data
         })
 
         setTimeout(() => {
-            handleCloseModal()
+            this.props.handleCloseModal()
         }, 500);
     }
 
