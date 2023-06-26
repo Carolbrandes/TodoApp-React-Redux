@@ -17,7 +17,7 @@ export const editTodo = (listEdit: ITodo[]) => {
     }
 }
 
-export const addEditTodo = (todo: Itodo) => {
+export const addEditTodo = (todo: ITodo) => {
     return {
         type: ADD_EDIT_TODO,
         todo

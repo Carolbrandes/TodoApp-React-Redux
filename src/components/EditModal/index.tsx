@@ -4,31 +4,34 @@ import Modal from '@mui/material/Modal'
 import { connect } from 'react-redux'
 import { updateTodo } from '@redux/thunk'
 import InputsForm from '@components/InputsForm'
+import { IPayloadEdit, IState, IpropsModalEdit } from '@types/index'
+import {  Dispatch } from 'redux'
 
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IState) => {
     return {
         todoEdit: state.todoForEdition,
         todos: state.todoList
     }
 }
 
-const mapDispatchToProps = (dispatch: any) => ({
-    updateTodo: (payload: any) => dispatch(updateTodo(payload))
+const mapDispatchToProps= (dispatch: Dispatch<any>) => ({
+    updateTodo: (payload: IPayloadEdit) => dispatch(updateTodo(payload))
 })
 
-class EditModal extends React.Component {
+class EditModal extends React.Component<IpropsModalEdit> {
     state = {
-        data: {
-            name: this.props.todoEdit.name,
-            description: this.props.todoEdit.description,
-            id: this.props.todoEdit.id,
-            status: this.props.todoEdit.status,
-            date: this.props.todoEdit.date
-        }
+        data:{
+            name: this?.props?.todoEdit?.name,
+            description: this?.props?.todoEdit?.description,
+            id: this?.props?.todoEdit?.id,
+            status: this?.props?.todoEdit?.status,
+            date: this?.props?.todoEdit?.date
+        } 
     }
+    
 
-    setStateData = (field, newValue) => {
+    setStateData = (field: string, newValue: string) => {
         this.setState({
             data: {
                 ...this.state.data,
@@ -38,13 +41,15 @@ class EditModal extends React.Component {
     }
 
     handleClick = () => {
-        this.props.updateTodo({
+        const {updateTodo, handleCloseModal}:IpropsModalEdit  = this.props
+
+        updateTodo({
             todos: this.props.todos,
             data: this.state.data
         })
 
         setTimeout(() => {
-            this.props.handleCloseModal()
+            handleCloseModal()
         }, 500);
     }
 

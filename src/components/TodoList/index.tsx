@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { connect } from 'react-redux'
 import Todo from './Todo'
 import InputLabel from '@mui/material/InputLabel'
@@ -8,38 +8,39 @@ import Select from '@mui/material/Select'
 import Grid from '@mui/material/Unstable_Grid2'
 import moment from 'moment'
 import * as S from './styles'
+import { IState, ITodo, IpropsTodoList } from '@types/index'
 
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IState) => {
     return {
         todos: state.todoList,
     }
 }
 
-class TodoList extends React.Component {
+class TodoList extends React.Component<IpropsTodoList> {
     state = {
-        status: '',
+        status: 'all',
         order: ''
     }
 
-    handleStatus = (event: any) => {
+    handleStatus = (event: ChangeEvent<any>) => {
         this.setState({
             status: event.target.value
         })
     }
 
-    handleOrder = (event: any) => {
+    handleOrder = (event: ChangeEvent<any>) => {
         this.setState({
             order: event.target.value
         })
     }
 
-    todosWithFilter = (todos: any) => {
-        return todos.filter((todo: any) => todo.status == this.state.status)
+    todosWithFilter = (todos: ITodo[]) => {
+        return todos.filter((todo: ITodo) => todo.status == this.state.status)
     }
 
-    todosWithOrder = (todos: any) => (
-        todos.sort((t1: any, t2: any) => {
+    todosWithOrder = (todos: ITodo[]) => (
+        todos.sort((t1: ITodo, t2: ITodo) => {
             const todo1 = moment(t1.date)
            
             const todo2 = moment(t2.date)
@@ -63,8 +64,8 @@ class TodoList extends React.Component {
         })
     )
 
-    todosTratement = (todos: any) => {
-        if (this.state.status) return this.todosWithFilter(todos)
+    todosTratement = (todos: ITodo[]) => {
+        if (this.state.status && this.state.status != 'all') return this.todosWithFilter(todos)
         if (this.state.order) return this.todosWithOrder(todos)
         return todos
     }
@@ -87,7 +88,7 @@ class TodoList extends React.Component {
                             onChange={this.handleStatus}
                             label="Status"
                         >
-                            <MenuItem value="">
+                            <MenuItem value="all">
                                 <em>Todos</em>
                             </MenuItem>
                             <MenuItem value="p">Pendentes</MenuItem>
@@ -120,15 +121,13 @@ class TodoList extends React.Component {
                     myTodos?.length ?
                         <Grid container spacing={3}>
                             {
-                                myTodos.map((todo: any, index: number) =>
+                                myTodos.map((todo: ITodo) =>
                                 (
                                     <Todo
-                                        ref={todo.ref}
                                         contentEditable
-                                        index={index}
                                         key={todo.id}
                                         todo={todo}
-                                        handleModal={this.props.handleModal}
+                                        handleModal={this?.props?.handleModal}
                                     />
                                 )
 

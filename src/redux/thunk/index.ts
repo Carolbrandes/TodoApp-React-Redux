@@ -1,7 +1,8 @@
 import { addTodo, addEditTodo, editTodo } from '@redux/actions'
-import { ITodo } from '../../types'
+import { IPayloadEdit, ITodo } from '../../types'
+import { Action, Dispatch } from 'redux'
 
-export const addNewTodo = (payload) => (dispatch: any) => {
+export const addNewTodo = (payload: IPayloadEdit) => (dispatch: Dispatch<Action>) => {
 
         const { data, todos } = payload
         const newList = [...todos, data]
@@ -9,11 +10,11 @@ export const addNewTodo = (payload) => (dispatch: any) => {
         dispatch(addTodo(newList))
 }
 
-export const addnewEditTodo = (todo: ITodo) => (dispatch: any) => {
+export const addnewEditTodo = (todo: ITodo) => (dispatch: Dispatch<Action>) => {
         dispatch(addEditTodo(todo))
 }
 
-export const updateTodo = (payload) => (dispatch: any) => {
+export const updateTodo = (payload: IPayloadEdit) => (dispatch: Dispatch<Action>) => {
 
         const { data, todos } = payload
         const removeTodo = todos.filter((todo: ITodo) => todo.id != data.id)
