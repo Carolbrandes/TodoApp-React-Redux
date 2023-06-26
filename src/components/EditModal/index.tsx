@@ -5,6 +5,7 @@ import Button from '@mui/material/Button'
 import { connect } from 'react-redux'
 import { updateTodo } from '@redux/thunk'
 import * as S from '@styles/Global'
+import InputsForm from '@components/InputsForm'
 
 
 const mapStateToProps = (state: any) => {
@@ -19,22 +20,25 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 class EditModal extends React.Component {
     state = {
-        name: this.props.todoEdit.name,
-        description: this.props.todoEdit.description,
-        id: this.props.todoEdit.id,
-        status: this.props.todoEdit.status
+        data: {
+            name: this.props.todoEdit.name,
+            description: this.props.todoEdit.description,
+            id: this.props.todoEdit.id,
+            status: this.props.todoEdit.status
+        }
     }
 
-    handleInput = (event: any, id: string) => {
-        id == 'name' ? this.setState({
-            name: event.target.value
-        }) : this.setState({
-            description: event.target.value
+    setStateData = (field, newValue) => {
+        this.setState({
+            data: {
+                ...this.state.data,
+                [field]: newValue
+            }
         })
     }
 
     handleClick = () => {
-        this.props.updateTodo(this.state)
+        this.props.updateTodo(this.state.data)
 
         setTimeout(() => {
             this.props.handleCloseModal()
@@ -43,8 +47,7 @@ class EditModal extends React.Component {
 
 
     render() {
-        const { modal, handleCloseModal, todoEdit } = this.props
-        const { name, description } = todoEdit
+        const { modal, handleCloseModal } = this.props
 
 
         const style = {
@@ -69,29 +72,13 @@ class EditModal extends React.Component {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <S.InputWrapper
-                        id="name"
-                        label="Tarefa"
-                        defaultValue={name}
-                        value={this.state.name}
-                        onChange={(event) => this.handleInput(event, 'name')}
+                    <InputsForm
+                        labelButton="Salvar"
+                        data={this.state.data}
+                        setStateData={this.setStateData}
+                        handleClick={this.handleClick}
                         isEdit
                     />
-
-                    <S.InputWrapper
-                        id="outlined-multiline-static"
-                        label="Descrição"
-                        multiline
-                        rows={4}
-                        defaultValue={description}
-                        value={this.state.description}
-                        onChange={(event) => this.handleInput(event, 'description')}
-                        isEdit
-                    />
-
-                    <div>
-                        <Button onClick={this.handleClick} variant="contained">Salvar Alterações</Button>
-                    </div>
                 </Box>
             </Modal>
 

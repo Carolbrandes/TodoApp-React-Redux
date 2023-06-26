@@ -1,23 +1,24 @@
 import React, { ChangeEvent } from "react";
 import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
 import * as S from '@styles/Global'
 
 
 
 class InputsForm extends React.Component {
+    state = {
+        errors: []
+    }
 
-    handleAddError = (newError: any) => this.props.handleError(newError)
-   
 
     handleOnBlur = (event: ChangeEvent<HTMLInputElement>, input: string) => {
-        console.log('handleOnBlur')
-        console.log('input =>', input)
-        if (event.target.value.length == 0) {
 
+        if (event.target.value.length == 0) {
             input == 'name' ?
-                this.handleAddError({ message: 'Preencha o nome da atividade', type: 'name' }) :
-                this.handleAddError({ message: 'Preencha a descrição', type: 'description' })
+                this.setState({
+                    errors: [...this.state.errors.filter(err => err.type != 'all'), { message: 'Preencha o nome da atividade', type: 'name' }]
+                }) : input == 'description' ? this.setState({
+                    errors: [...this.state.errors.filter(err => err.type != 'all'), { message: 'Preencha a descrição', type: 'description' }]
+                }) : false
         }
     }
 
@@ -25,25 +26,44 @@ class InputsForm extends React.Component {
     handleChange = (event: ChangeEvent<HTMLInputElement>, input: string) => {
 
         if (input == 'name') {
-            this.props.handleData(event.target.value, 'name')
-            this.props.handleFilterErrors('name')
-            return
+            this.props.setStateData('name', event.target.value)
+            this.setState({
+                errors: this.state.errors.filter((error: any) => error.type != 'name' && error.type != 'all')
+            })
+            
         }
 
-        this.props.handleData(event.target.value, 'description')
-        this.props.handleFilterErrors('description')
+        if (input == 'description') {
+            this.props.setStateData('description', event.target.value)
+            this.setState({
+                errors: this.state.errors.filter((error: any) => error.type != 'description' && error.type != 'all')
+            })
+        }
 
     }
 
 
+    verifyBeforeHandleClick = () => {
+        if (!this.props.data.name && !this.props.data.description) {
+
+            this.setState({
+                errors: [{ message: 'Preencha o nome da Atividade e a Descrição', type: 'all' }]
+            })
+            return
+        }
+
+        this.props.handleClick()
+
+    }
+
     render() {
-        const { data, errors, handleClick, labelButton } = this.props
-        console.log("🚀 ~ file: index.tsx:51 ~ InputsForm ~ render ~ errors:", errors)
+        const { data, labelButton, isEdit } = this.props
+       
         const { name, description } = data
 
         return (
-            <Box component="form">
 
+            <>
                 <S.InputWrapper
                     required
                     id="todo-name"
@@ -51,6 +71,7 @@ class InputsForm extends React.Component {
                     value={name}
                     onBlur={(event: ChangeEvent<HTMLInputElement>) => this.handleOnBlur(event, 'name')}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => this.handleChange(event, 'name')}
+                    isEdit={isEdit}
                 />
 
 
@@ -63,17 +84,18 @@ class InputsForm extends React.Component {
                     value={description}
                     onBlur={(event: ChangeEvent<HTMLInputElement>) => this.handleOnBlur(event, 'description')}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => this.handleChange(event, 'description')}
+                    isEdit={isEdit}
                 />
 
 
                 {
-                    errors?.map((error) => <S.ErrorMessage key={error.type} severity="error">{error.message}</S.ErrorMessage>)
+                    this.state.errors?.map((error) => <S.ErrorMessage key={error.type} severity="error">{error.message}</S.ErrorMessage>)
                 }
 
                 <div>
-                    <Button variant="contained" onClick={handleClick}>{labelButton}</Button>
+                    <Button variant="contained" onClick={this.verifyBeforeHandleClick}>{labelButton}</Button>
                 </div>
-            </Box>
+            </>
         )
     }
 }

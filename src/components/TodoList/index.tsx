@@ -6,8 +6,6 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2';
 import moment from 'moment'
 import * as S from './styles'
@@ -15,7 +13,7 @@ import * as S from './styles'
 
 const mapStateToProps = (state: any) => {
     return {
-        todos: state.todoList
+        todos: state.todoList,
     }
 }
 
@@ -66,7 +64,7 @@ class TodoList extends React.Component {
         })
     )
 
-    mytodos = (todos: any) => {
+    todosTratement = (todos: any) => {
         if (this.state.status) return this.todosWithFilter(todos)
         if (this.state.order) return this.todosWithOrder(todos)
         return todos
@@ -74,7 +72,9 @@ class TodoList extends React.Component {
 
     render() {
         const { todos } = this.props
-
+        console.log("🚀 ~ file: index.tsx:77 ~ TodoList ~ render ~ todos:", todos)
+        const myTodos = this.todosTratement(todos)
+        console.log("🚀 ~ file: index.tsx:80 ~ TodoList ~ render ~ myTodos:", myTodos)
 
         return (
             <>
@@ -118,26 +118,25 @@ class TodoList extends React.Component {
 
 
                 {
-                    todos?.length ?
-                        (
-                            <Grid container spacing={3}>
-                                {
-                                    this.mytodos(todos).map((todo: any) => (
-                                        <Grid xs={6} md={4}>
-                                            <Card sx={{ minWidth: 150 }}>
-                                                <CardContent>
-                                                    <Todo
-                                                        key={todo.id}
-                                                        todo={todo}
-                                                        handleModal={this.props.handleModal}
-                                                    />
-                                                </CardContent>
-                                            </Card>
-                                        </Grid>
-                                    ))
-                                }
-                            </Grid>
-                        ) :
+                    myTodos?.length ?
+                        <Grid container spacing={3}>
+                            {
+                                myTodos.map((todo: any, index: number) =>
+                                (
+                                    <Todo
+                                        ref={todo.ref}
+                                        contentEditable
+                                        index={index}
+                                        key={todo.id}
+                                        todo={todo}
+                                        handleModal={this.props.handleModal}
+                                    />
+                                )
+
+                                )
+                            }
+                        </Grid>
+                        :
                         (
                             <S.Text variant="subtitle1" gutterBottom>
                                 Nenhuma tarefa cadastrada
