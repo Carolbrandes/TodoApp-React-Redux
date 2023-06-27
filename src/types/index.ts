@@ -56,6 +56,5 @@ export interface IpropsTodo {
 
 export interface IpropsTodoList {
     handleModal: Function
-    todos: ITodo[]
 }
 
