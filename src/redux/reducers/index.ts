@@ -1,4 +1,4 @@
-import { ADD_TODO, EDIT_TODO, ADD_EDIT_TODO } from '@redux/types'
+import { ADD_TODO, EDIT_TODO, ADD_EDIT_TODO, GET_TODOS } from '@redux/types'
 import { ITodo } from '@types/index'
 
 interface Iaction {
@@ -6,6 +6,7 @@ interface Iaction {
     todoList?: ITodo[]
     todo?: ITodo
     listEdit?: ITodo[]
+    listLS?: ITodo[]
 }
 
 
@@ -26,7 +27,7 @@ const todoList = (state = initialState, action: Iaction) => {
             }
 
         case EDIT_TODO:
-           
+
             return {
                 ...state,
                 todoList: action.listEdit
@@ -38,6 +39,13 @@ const todoList = (state = initialState, action: Iaction) => {
             return {
                 ...state,
                 todoForEdition: action.todo
+            }
+
+        case GET_TODOS:
+
+            return {
+                ...state,
+                todoList: action.listLS
             }
 
         default:

@@ -71,12 +71,10 @@ class TodoList extends React.Component<IpropsTodoList> {
     }
 
     render() {
-        const todos = localStorage.getItem('todos')
-    
-        const myTodos = todos && this.todosTratement(JSON.parse(todos)) || []
-        console.log("🚀 ~ file: index.tsx:77 ~ TodoList ~ render ~ myTodos:", myTodos)
+        const {todos} = this.props
+        const myTodos = todos.length && this.todosTratement(todos) || []
+        console.log("🚀 ~ file: index.tsx:76 ~ TodoList ~ render ~ myTodos:", myTodos)
        
-
         return (
             <>
                 <S.WrapperFilter>

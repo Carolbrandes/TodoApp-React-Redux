@@ -1,4 +1,4 @@
-import { addTodo, addEditTodo, editTodo } from '@redux/actions'
+import { addTodo, addEditTodo, editTodo, getAllTodos } from '@redux/actions'
 import { IPayloadEdit, ITodo } from '../../types'
 import { Action, Dispatch } from 'redux'
 
@@ -22,4 +22,13 @@ export const updateTodo = (payload: IPayloadEdit) => (dispatch: Dispatch<Action>
         localStorage.setItem('todos', JSON.stringify(listEdit))
 
         dispatch(editTodo(listEdit))
+}
+
+export const getTodos = () =>  (dispatch: Dispatch<Action>) =>{
+        const todosLs = localStorage.getItem('todos')
+
+        const listLS = todosLs && JSON.parse(todosLs) || []
+        
+        if(todosLs?.length) dispatch(getAllTodos(listLS))
+        
 }
